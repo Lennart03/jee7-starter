@@ -1,4 +1,18 @@
 <dataset>
     <person id="1000" firstName="John" lastName="Doe"/>
     <person id="2000" firstName="Jane" lastName="Doe"/>
+    
+    <tweet id="1000" user_id="1000" message="I see purple haze."/>
+    <tweet id="2000" user_id="2000" message="This is a test message."/>
+    <tweet id="3000" user_id="1000" message="I'm the dankest there is!"/>
+    
+    <tag id="1000" name="SuchTag"/>
+    <tag id="2000" name="WOW"/>
+    
+    <jnd_tag_twee tag_fk="1000" tweet_fk="1000"/>
+    <jnd_tag_twee tag_fk="1000" tweet_fk="2000"/>
+    <jnd_tag_twee tag_fk="1000" tweet_fk="3000"/>
+    <jnd_tag_twee tag_fk="2000" tweet_fk="1000"/>
+    <jnd_tag_twee tag_fk="2000" tweet_fk="3000"/>
+    
 </dataset>

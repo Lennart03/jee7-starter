@@ -25,9 +25,9 @@
     <logger name="org.hibernate.SQL" level="DEBUG" />
 
     <!-- Enable if you want to show the bound parameters for prepared statement placeholders. -->
-    <!--<logger name="org.hibernate.type" level="TRACE" />-->
+    <logger name="org.hibernate.type" level="TRACE"/>
 
-    <root level="DEBUG">
+    <root level="TRACE">
         <appender-ref ref="console"/>
     </root>
 </configuration>

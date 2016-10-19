@@ -23,6 +23,10 @@ public class Person implements Serializable {
 
     @NotNull
     private String lastName;
+    
+    private String password;
+    
+    private String email;
 
     /**
      * Used by JPA.
@@ -34,8 +38,18 @@ public class Person implements Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
     }
+    
+    
 
-    public Long getId() {
+    public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Long getId() {
         return id;
     }
 
