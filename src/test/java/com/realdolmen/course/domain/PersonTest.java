@@ -8,11 +8,11 @@ import static org.junit.Assert.assertNull;
 public class PersonTest {
     @Test
     public void nameReturnsConcatenationOfFirstNameAndLastName() throws Exception {
-        assertEquals("George Orwell", new Person("George", "Orwell").name());
+        assertEquals("George Orwell", new RegularPerson("George", "Orwell").name());
     }
 
     @Test
     public void personIsInstantiatedWithNullId() throws Exception {
-        assertNull("Person ID is supposed to be null before saving", new Person("Paul", "McCartney").getId());
+        assertNull("Person ID is supposed to be null before saving", new RegularPerson("Paul", "McCartney").getId());
     }
 }

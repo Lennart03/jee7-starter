@@ -55,6 +55,9 @@
             Currently haven't found an elegant way around this.
          -->
         <class>com.realdolmen.course.domain.Person</class>
+        <class>com.realdolmen.course.domain.RegularPerson</class>
+        <class>com.realdolmen.course.domain.VerifiedPerson</class>
+        <class>com.realdolmen.course.domain.Profile</class>
         <class>com.realdolmen.tweet.Tweet</class>
         <class>com.realdolmen.tweet.Tag</class>
         

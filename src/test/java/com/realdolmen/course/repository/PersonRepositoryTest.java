@@ -1,6 +1,7 @@
 package com.realdolmen.course.repository;
 
 import com.realdolmen.course.domain.Person;
+import com.realdolmen.course.domain.RegularPerson;
 import com.realdolmen.course.utilities.persistence.JpaPersistenceTest;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,17 +22,17 @@ public class PersonRepositoryTest extends JpaPersistenceTest {
 
     @Test(expected = ConstraintViolationException.class)
     public void personCanNotBePersistedWithoutFirstName() throws Exception {
-        personRepository.save(new Person(null, "Liskov"));
+        personRepository.save(new RegularPerson(null, "Liskov"));
     }
 
     @Test(expected = ConstraintViolationException.class)
     public void personCanNotBePersistedWithoutLastName() throws Exception {
-        personRepository.save(new Person("Barbara", null));
+        personRepository.save(new RegularPerson("Barbara", null));
     }
 
     @Test
     public void shouldSaveAPerson() {
-        Person p = new Person("Theo", "Tester");
+        Person p = new RegularPerson("Theo", "Tester");
         personRepository.save(p);
         assertNotNull("Person ID is not supposed to be null after saving", p.getId());
     }

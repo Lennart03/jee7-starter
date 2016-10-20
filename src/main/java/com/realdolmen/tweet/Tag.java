@@ -1,14 +1,12 @@
 package com.realdolmen.tweet;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 @Entity
@@ -20,11 +18,8 @@ public class Tag {
 	
 	private String name;
 	
-	@ManyToMany
-	@JoinTable(name = "jnd_tag_twee",
-	joinColumns = @JoinColumn(name="tag_fk"),
-	inverseJoinColumns = @JoinColumn(name = "tweet_fk"))
-	private List<Tweet> tweets = new LinkedList<>();
+	@ManyToMany(mappedBy = "tags") 
+	private List<Tweet> tweets = new ArrayList<Tweet>(); 
 	
 	public Tag(){
 		

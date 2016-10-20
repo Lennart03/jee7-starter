@@ -1,6 +1,10 @@
 package com.realdolmen.course.domain;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.dbunit.util.concurrent.SynchronousChannel;
 import org.hibernate.validator.constraints.Email;
@@ -14,11 +18,11 @@ import com.realdolmen.tweet.Tweet;
 
 public class TweetPersistenceTest extends JpaPersistenceTest{
 	
-	private Person testPerson;
+	private RegularPerson testPerson;
 	
 	@Before
 	public void initPerson() {
-		testPerson = new Person("Test", "Person");
+		testPerson = new RegularPerson("Test", "Person");
 		testPerson.setEmail("person@derp.com");
 		testPerson.setPassword("derp");
 	}
@@ -84,18 +88,56 @@ public class TweetPersistenceTest extends JpaPersistenceTest{
 	@Test
 	public void removeTweet(){
 		EntityManager em = entityManager();
-		em.remove(em.find(Tweet.class, 1000L));
+		Tweet entity = em.find(Tweet.class, 1000L);
+		em.remove(entity);
 	}
 	
 	@Test
 	public void removeTagFromTweet() {
 		EntityManager em = entityManager();
 		Tag tag = em.find(Tag.class, 1000L);
+		Tweet tweetRetrieved;
+		for(Tweet tweet : tag.getTweets()){
+			tweetRetrieved = em.find(Tweet.class, tweet.getId());
+			tweetRetrieved.removeTag(tag);
+			em.merge(tweetRetrieved);
+		}
 		em.remove(tag);
 	}
 	
+	@Test
+	public void queryAllTweets(){
+		EntityManager em = entityManager();
+		Query query = em.createQuery("SELECT t FROM Tweet t");
+		List<Tweet> tweets = query.getResultList();
+		for(Tweet tweet : tweets){
+			System.out.println(tweet);
+		}
+		assertEquals(9, tweets.size());
+	}
 	
+	@Test
+	public void queryTweetsFromPerson(){
+		EntityManager em =entityManager();
+		Query query = em.createQuery("SELECT t FROM Tweet t WHERE (t.user.firstName = 'John' AND t.user.lastName = 'Doe')");
+		List<Tweet> tweets = query.getResultList();
+		for(Tweet tweet : tweets){
+			System.out.println(tweet);
+		}
+		assertEquals(2, tweets.size());
+	}
 	
+	@Test
+	public void queryAverageNumberOfTagsPerTweet() {
+		EntityManager em = entityManager();
+		double d = em.createQuery("select avg (t.tags.size) from Tweet t", Double.class).getSingleResult();
+		System.out.println(d);
+	}
 	
+	@Test
+	public void queryShizzle() {
+		EntityManager em = entityManager();
+		List<Map<Person, Double>> r = em.createQuery("select new com.realdom").getResultList();
+	}
 
 }

@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.realdolmen.course.domain.Person;
+import com.realdolmen.course.domain.RegularPerson;
 
 public class TweetTest {
 
@@ -25,7 +26,7 @@ public class TweetTest {
 	public void init() {
 		factory = Validation.buildDefaultValidatorFactory();
 		validator = factory.getValidator();
-		testPerson = new Person("Test", "Person");
+		testPerson = new RegularPerson("Test", "Person");
 		testPerson.setEmail("person@derp.com");
 		testPerson.setPassword("derp");
 	}

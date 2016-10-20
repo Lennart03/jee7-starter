@@ -1,5 +1,6 @@
 package com.realdolmen.tweet;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
@@ -9,11 +10,16 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -23,18 +29,21 @@ import com.realdolmen.demo.Status;
 @Entity
 public class Tweet {
 
+	public static final String GET_AVG = "Tweet.getAvg";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne(cascade = {CascadeType.PERSIST})
+	@ManyToOne(cascade = {CascadeType.PERSIST}, fetch=FetchType.EAGER)
 	private Person user;
 
 	private String message;
 
-	@ManyToMany(mappedBy = "tweets",
-			cascade = {CascadeType.MERGE})
-	private List<Tag> tags = new LinkedList<Tag>();
+	@ManyToMany(cascade = {CascadeType.PERSIST})
+	@JoinTable(name = "jnd_tweet_tag",  joinColumns = @JoinColumn(name = "tweet_fk"),  
+	inverseJoinColumns = @JoinColumn(name = "tag_fk")) 
+	private List<Tag> tags = new ArrayList<Tag>();
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date = new Date();
@@ -108,6 +117,16 @@ public class Tweet {
 		this.tags.add(tag);
 		tag.addTweet(this);
 	}
+
+	public void removeTag(Tag tag) {
+		tags.remove(tag);
+	}
+
+	@Override
+	public String toString() {
+		return "Tweet [id=" + id + ", user=" + user + ", message=" + message + ", tags=" + tags + "]";
+	}
+	
 	
 	
 
